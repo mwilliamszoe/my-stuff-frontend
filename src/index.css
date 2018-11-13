@@ -1,3 +1,41 @@
-.title {
-  color: blue;
+.homePageWithoutSearch {
+  display: flex;
+  justify-content: space-around;
+  margin: 3%;
+}
+
+.homePageWithSearch {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2%;
+}
+
+input.searchInput {
+  width: 25%;
+  align-self: center;
+  text-align: right;
+  box-shadow: none;
+  border-radius: 1em;
+  padding: 6px;
+}
+
+.listHolder {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.5em;
+  background-color: pink;
+  justify-content: space-around;
+  padding: 1em;
+}
+
+.ui.four.cards {
+  margin-left: -0.75em;
+  margin-right: -0.75em;
+  width: 75%;
+  background-color: lightblue;
+  text-align: center;
+}
+
+button.ui.basic.button {
+  width: 100%;
 }

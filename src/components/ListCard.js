@@ -1,9 +1,12 @@
-import React, { Component } from "react";
+import React from "react";
+import { Button } from "semantic-ui-react";
 
-class ListCard extends Component {
-  render() {
-    return <div>List Card - holds title of list</div>;
-  }
-}
+const ListCard = props => {
+  return (
+    <Button basic onClick={() => props.showList(props.list)}>
+      {props.list.label}
+    </Button>
+  );
+};
 
 export default ListCard;

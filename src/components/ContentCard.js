@@ -1,34 +1,27 @@
-import React, { Component } from "react";
-import { Title, Img, Info } from "./ContentCardParts";
-import { Card, Image } from "semantic-ui-react";
+import React from "react";
+import { Card, Image, Button } from "semantic-ui-react";
 import "../index.css";
 
-// const urlQuery = `https://www.googleapis.com/books/v1/volumes?q=${query}:keyes&${key}=yourAPIKey`;
-
-class ContentCard extends Component {
-  render() {
-    const truncatedTitle = this.props.book.volumeInfo.title
-      .split("")
-      .splice(0, 25)
-      .join("");
-    return (
-      <Card>
-        {/* <Title book={this.props.book} /> */}
-        {/* <Img book={this.props.book} /> */}
-        {/* <Info book={this.props.book} /> */}
-        <Card.Content>
-          <Card.Meta>{truncatedTitle}</Card.Meta>
-        </Card.Content>
-        <Image
-          src={
-            this.props.book.volumeInfo.imageLinks
-              ? this.props.book.volumeInfo.imageLinks.smallThumbnail
-              : null
-          }
-        />
-      </Card>
-    );
-  }
-}
+const ContentCard = props => (
+  <Card className="card" onClick={() => props.addToList(props.book)}>
+    <Card.Content>
+      <Card.Meta>
+        {props.book.volumeInfo
+          ? props.book.volumeInfo.title
+              .split("")
+              .splice(0, 50)
+              .join("")
+          : "No Title Specified"}
+      </Card.Meta>
+    </Card.Content>
+    <Image
+      src={
+        props.book.volumeInfo
+          ? props.book.volumeInfo.imageLinks.thumbnail
+          : null
+      }
+    />
+  </Card>
+);
 
 export default ContentCard;
