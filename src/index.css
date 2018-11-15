@@ -23,7 +23,7 @@ input.searchInput {
   display: flex;
   flex-direction: column;
   font-size: 1.5em;
-  background-color: pink;
+
   justify-content: space-around;
   padding: 1em;
 }
@@ -32,7 +32,7 @@ input.searchInput {
   margin-left: -0.75em;
   margin-right: -0.75em;
   width: 75%;
-  background-color: lightblue;
+
   text-align: center;
 }
 

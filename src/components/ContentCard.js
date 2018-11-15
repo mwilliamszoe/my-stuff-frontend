@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Image, Button } from "semantic-ui-react";
+import { Card, Image } from "semantic-ui-react";
 import "../index.css";
 
 const ContentCard = props => (
@@ -14,13 +14,9 @@ const ContentCard = props => (
           : "No Title Specified"}
       </Card.Meta>
     </Card.Content>
-    <Image
-      src={
-        props.book.volumeInfo
-          ? props.book.volumeInfo.imageLinks.thumbnail
-          : null
-      }
-    />
+    {props.book.volumeInfo.imageLinks ? (
+      <Image src={props.book.volumeInfo.imageLinks.thumbnail} />
+    ) : null}
   </Card>
 );
 

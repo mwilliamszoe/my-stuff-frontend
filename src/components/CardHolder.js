@@ -8,20 +8,20 @@ const url = `https://www.googleapis.com/books/v1/volumes?q=flowers+inauthor:keye
 
 class CardHolder extends Component {
   state = {
-    bookAPI: { items: [] }
+    originalListOfBooks: []
   };
   componentDidMount = () => {
     fetch(url)
       .then(r => r.json())
-      .then(bookAPI =>
+      .then(book =>
         this.setState({
-          bookAPI
+          originalListOfBooks: book.items
         })
       );
   };
 
   render() {
-    const bookItems = this.state.bookAPI.items;
+    const bookItems = this.state.originalListOfBooks.items;
     let cards = bookItems.map((book, idx) => {
       return (
         <ContentCard book={book} key={idx} addToList={this.props.addToList} />
