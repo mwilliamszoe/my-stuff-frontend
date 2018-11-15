@@ -1,8 +1,11 @@
 import React, { Component } from "react";
 import ContentCard from "./ContentCard";
 import ListHolder from "./ListHolder";
+import HomePage from "./HomePage";
 import Search from "./Search";
 import { Card } from "semantic-ui-react";
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+
 import "../index.css";
 
 const key = "AIzaSyD3-RiP1NigNuiJnQlgZqdJAduRZerifQE";
@@ -64,9 +67,6 @@ class Homepage extends Component {
     );
   };
 
-  // 1) put onChange handler on getBooks input. This will update this.state.searchTerm
-  // 2) put onClick handlder on search button. This will make the fetch request and then set this.state.filteredListOfBooks
-
   handleChange = event => {
     this.setState({
       searchTerm: event.target.value
@@ -86,26 +86,53 @@ class Homepage extends Component {
   };
 
   render() {
-    let cards = this.state.filteredListOfBooks.map((book, idx) => {
-      return (
-        <ContentCard
-          book={book}
-          key={idx}
-          addToList={this.addToList}
-          filteredListOfBooks={this.state.filteredListOfBooks}
-        />
-      );
-    });
+    console.log(this.props.match.path);
     return (
-      <div className="homePageWithSearch">
-        <Search
-          handleChange={this.handleChange}
-          handleClick={this.handleClick}
-        />
-        <div className="homePageWithoutSearch">
-          <ListHolder lists={this.state.lists} showList={this.showList} />
-          <Card.Group itemsPerRow={4}>{cards}</Card.Group>
-        </div>
+      <div>
+        <Switch>
+          <Route
+            path={`${this.props.match.path}/search/`}
+            render={props => {
+              return (
+                <Search
+                  {...props}
+                  handleChange={this.handleChange}
+                  handleClick={this.handleClick}
+                />
+              );
+            }}
+          />
+          <Route
+            path={`${this.props.match.path}/`}
+            render={props => {
+              let cards = this.state.filteredListOfBooks.map((book, idx) => {
+                return (
+                  <ContentCard
+                    book={book}
+                    key={idx}
+                    addToList={this.addToList}
+                    filteredListOfBooks={this.state.filteredListOfBooks}
+                  />
+                );
+              });
+              return (
+                <div className="homePageWithSearch">
+                  <Search
+                    handleChange={this.handleChange}
+                    handleClick={this.handleClick}
+                  />
+                  <div className="homePageWithoutSearch">
+                    <ListHolder
+                      lists={this.state.lists}
+                      showList={this.showList}
+                    />
+                    <Card.Group itemsPerRow={4}>{cards}</Card.Group>
+                  </div>
+                </div>
+              );
+            }}
+          />
+        </Switch>
       </div>
     );
   }
