@@ -16,7 +16,8 @@ class Homepage extends Component {
     originalListOfBooks: [],
     users: [],
     lists: [],
-    filteredListOfBooks: []
+    filteredListOfBooks: [],
+    searchTerm: "patience"
   };
   componentDidMount = () => {
     fetch(sampleUrl)
@@ -63,14 +64,21 @@ class Homepage extends Component {
     );
   };
 
-  handleSearch = event => {
-    // const desiredBooks = this.state.originalListOfBooks.filter(book => {
-    //   return book.volumeInfo.includes(event.target.value);
-    // });
-    fetch(`https://www.googleapis.com/books/v1/volumes?q=${event.target.value}`)
+  // 1) put onChange handler on getBooks input. This will update this.state.searchTerm
+  // 2) put onClick handlder on search button. This will make the fetch request and then set this.state.filteredListOfBooks
+
+  handleChange = event => {
+    this.setState({
+      searchTerm: event.target.value
+    });
+  };
+
+  handleClick = () => {
+    fetch(
+      `https://www.googleapis.com/books/v1/volumes/?q=${this.state.searchTerm}`
+    )
       .then(r => r.json())
       .then(books => {
-        //these books match search query
         this.setState({
           filteredListOfBooks: books.items
         });
@@ -90,7 +98,10 @@ class Homepage extends Component {
     });
     return (
       <div className="homePageWithSearch">
-        <Search handleSearch={this.handleSearch} />
+        <Search
+          handleChange={this.handleChange}
+          handleClick={this.handleClick}
+        />
         <div className="homePageWithoutSearch">
           <ListHolder lists={this.state.lists} showList={this.showList} />
           <Card.Group itemsPerRow={4}>{cards}</Card.Group>
@@ -101,5 +112,3 @@ class Homepage extends Component {
 }
 
 export default Homepage;
-
-// ("Access Not Configured. Books API has not been used in project 940221824101 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/books.googleapis.com/overview?project=940221824101 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.");
